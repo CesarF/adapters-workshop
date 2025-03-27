@@ -1,0 +1,64 @@
+[tool.poetry]
+name = "balance-processor"
+version = "0.1.0"
+description = "Function to process a list of debit and credits transactions of an account, and send an email."
+authors = [
+  "César Forero <cforero@resurety.com>",
+]
+packages = [{include = "*", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "3.11.6"
+pydantic = "^2.6.2"
+
+[tool.poetry.group.local.dependencies]
+pymongo = "^4.5.0"
+fastapi = "^0.103.1"
+uvicorn = "^0.23.2"
+
+[tool.poetry.group.aws.dependencies]
+boto3 = "^1.26.101"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.2"
+pytest-cov = "^4.0.0"
+pytest-mock = "^3.10.0"
+pytest-env = "^0.8.1"
+faker = "^18.3.1"
+bandit = "^1.7.5"
+pylint = "^2.17.1"
+black = "^23.1.0"
+flake8 = "^6.0.0"
+isort = "^5.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+# https://pycqa.github.io/isort/docs/configuration/config_files.html
+[tool.isort]
+# https://pycqa.github.io/isort/docs/configuration/black_compatibility/
+profile = "black"
+multi_line_output = 3
+
+# https://docs.pytest.org/en/7.2.x/reference/customize.html
+[tool.pytest.ini_options]
+python_files = "test_*.py"
+pythonpath = "src"
+testpaths = [
+  "tests"
+]
+env = [
+  "LOG_LEVEL = DEBUG",
+  "MONGO_USER = fake_user",
+  "MONGO_PASSWORD = fake_pwd",
+  "MONGO_HOST = db",
+  "MONGO_PORT = 0000",
+  "MONGO_DB_NAME = fake_db",
+  "AWS_DEFAULT_REGION = us-east-1",
+  "EMAIL_SENDER = fake_sender",
+  "EMAIL_RECIPIENT = fake_recipient",
+  "EMAIL_SENDER_PWD = fake_pwd",
+  "SMTP_SERVER = fake_server",
+  "SMTP_PORT = 0000"
+]
